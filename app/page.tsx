@@ -1,9 +1,15 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+          <Link href="/test">
+        <button style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
+          Testページへ
+        </button>
+      </Link>
       <main className={styles.main}>
         <Image
           className={styles.logo}
