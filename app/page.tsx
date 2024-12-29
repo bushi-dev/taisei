@@ -1,15 +1,17 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <BackgroundMusic src="/sound/maou_bgm_fantasy15.mp3" />
       <Link href="/battle">
         <button
           style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}
         >
-          Testページへ
+          はじめから
         </button>
       </Link>
       <main className={styles.main}>
