@@ -5,8 +5,10 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className={styles.page}>
-          <Link href="/test">
-        <button style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
+      <Link href="/battle">
+        <button
+          style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}
+        >
           Testページへ
         </button>
       </Link>
