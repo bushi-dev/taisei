@@ -1,6 +1,25 @@
 body {
   background-image: url("/image/bg.webp");
-  background-size: cover; /* 背景を埋める */
-  background-position: center; /* 画像の中央を表示 */
-  background-repeat: no-repeat; /* 繰り返しを防ぐ */
+  background-size: 150%; /* 背景を150%拡大 */
+  background-position: center; /* 背景画像のど真ん中を表示 */
+  background-attachment: fixed; /* 背景を固定 */
+  animation: backgroundShake 20s infinite ease-in-out; /* アニメーションを追加 */
+}
+
+@keyframes backgroundShake {
+  0% {
+    background-position: center;
+  }
+  25% {
+    background-position: calc(50% + 20px) calc(50% - 20px);
+  }
+  50% {
+    background-position: center calc(50% + 20px);
+  }
+  75% {
+    background-position: calc(50% - 20px) calc(50% + 20px);
+  }
+  100% {
+    background-position: center;
+  }
 }
