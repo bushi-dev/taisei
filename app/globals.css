@@ -1,4 +1,9 @@
+html,
 body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
   background-image: url("/image/bg.webp");
   background-size: 150%; /* 背景を150%拡大 */
   background-position: center; /* 背景画像のど真ん中を表示 */

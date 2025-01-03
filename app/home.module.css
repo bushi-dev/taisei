@@ -1,0 +1,77 @@
+/* home.module.css */
+
+/* 背景アニメーション */
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 光るSTART */
+@keyframes mysteriousGlow {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes mysteriousGlowText {
+  0% {
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #00ffff, 0 0 30px #00ff00,
+      0 0 40px #ffff00, 0 0 50px #ff00ff, 0 0 60px #ff0000;
+  }
+  50% {
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #ff00ff, 0 0 30px #ff0000,
+      0 0 40px #00ffff, 0 0 50px #ffff00, 0 0 60px #00ff00;
+  }
+  100% {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff, 0 0 30px #00ff00,
+      0 0 40px #ff0000, 0 0 50px #ffff00, 0 0 60px #00ffff;
+  }
+}
+
+/* ジャンプする忍者 */
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-110px);
+  }
+}
+
+.background {
+  animation: backgroundShift 10s infinite alternate;
+}
+
+.glowing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+  animation: mysteriousGlow 3s infinite alternate;
+}
+
+.startText {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #00ffff,
+    0 0 40px #ff00ff, 0 0 50px #ff0000, 0 0 60px #ffff00;
+  animation: mysteriousGlowText 3s infinite alternate;
+}
+
+.jumping {
+  position: fixed;
+  bottom: -10px;
+  left: 0;
+  animation: jump 1.5s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
