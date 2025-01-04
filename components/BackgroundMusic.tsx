@@ -1,28 +1,23 @@
-"use client";
+import React, { useEffect, useRef } from "react";
 
-import { useEffect, useRef } from "react";
-
-interface BackgroundMusicProps {
+type BackgroundMusicProps = {
   src: string;
-}
+  shouldPlay: boolean;
+};
 
-export default function BackgroundMusic({ src }: BackgroundMusicProps) {
+export default function BackgroundMusic({
+  src,
+  shouldPlay,
+}: BackgroundMusicProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      // ボリュームを設定（例: 0.2 は20%）
-      audio.volume = 0.2;
-
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.error("再生がブロックされました:", error);
-        });
+    if (audioRef.current) {
+      if (shouldPlay) {
+        audioRef.current.play();
       }
     }
-  }, []);
+  }, [shouldPlay]);
 
-  return <audio ref={audioRef} src={src} preload="auto" loop />;
+  return <audio ref={audioRef} src={src} loop />;
 }
