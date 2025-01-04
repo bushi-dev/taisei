@@ -3,8 +3,18 @@
 import { playSound } from "@/app/util";
 import { useState, useRef, useEffect } from "react";
 
-const generateQuestion = (digits = 1, operation = "add") => {
-  const getRandomInt = (max) => Math.floor(Math.random() * max) + 1;
+type Question = {
+  question: string;
+  options: number[];
+  correctAnswer: number;
+};
+
+const generateQuestion = (
+  digits: number = 1,
+  operation: "add" | "subtract" | "multiply"
+): Question => {
+  const getRandomInt = (max: number) => Math.floor(Math.random() * max) + 1;
+
   const num1 = getRandomInt(Math.pow(10, digits));
   const num2 = getRandomInt(Math.pow(10, digits));
 
@@ -28,25 +38,24 @@ const generateQuestion = (digits = 1, operation = "add") => {
       throw new Error("Invalid operation");
   }
 
-  const options = [
-    correctAnswer,
-    correctAnswer + getRandomInt(10),
-    correctAnswer - getRandomInt(10),
-  ].sort(() => Math.random() - 0.5);
+  const options = Array.from({ length: 3 }, (_, i) => {
+    const offset =
+      i === 0 ? 0 : getRandomInt(10) * (Math.random() < 0.5 ? -1 : 1);
+    return correctAnswer + offset;
+  }).sort(() => Math.random() - 0.5);
 
   return { question, options, correctAnswer };
 };
 
 export default function Quiz() {
-  const [currentQuestion, setCurrentQuestion] = useState(null);
-  const audioRef = useRef(null);
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // クライアントサイドでのみ問題を生成
     setCurrentQuestion(generateQuestion(1, "add"));
   }, []);
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: number) => {
     if (!currentQuestion) return;
 
     const isCorrect = option === currentQuestion.correctAnswer;
@@ -54,14 +63,13 @@ export default function Quiz() {
 
     console.log(isCorrect ? "正解！" : "不正解！");
 
-    // 次の問題を生成
     setTimeout(() => {
       setCurrentQuestion(generateQuestion(1, "add"));
     }, 2000);
   };
 
   if (!currentQuestion) {
-    return <p>Loading...</p>; // 問題生成中にローディングメッセージを表示
+    return <p>Loading...</p>;
   }
 
   return (

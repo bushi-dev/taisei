@@ -1,46 +1,39 @@
-"use client";
-export const playSound = (audioRef, seikai) => {
+import { RefObject } from "react";
+
+export const playSound = (
+  audioRef: RefObject<HTMLAudioElement | null>,
+  seikai: boolean
+) => {
   if (audioRef.current) {
     const primarySound = seikai ? "/sound/ken1.mp3" : "/sound/ken2.mp3";
     const secondarySound = seikai ? "/sound/seikai.mp3" : "/sound/sippai.mp3";
 
-    // 最初の音声を設定して再生
-    audioRef.current.src = primarySound;
-    audioRef.current.load();
-    audioRef.current.loop = false;
-    audioRef.current
-      .play()
-      .then(() => {
-        console.log("Primary sound playing...");
-      })
-      .catch(() => {});
+    const playAudio = (src: string, onEnd?: () => void) => {
+      if (!audioRef.current) return;
 
-    // イベントリスナーを設定
-    const handlePrimarySoundEnded = () => {
-      audioRef.current?.removeEventListener("ended", handlePrimarySoundEnded);
-
-      // 次の音声を設定して再生
-      audioRef.current.src = secondarySound;
+      audioRef.current.src = src;
       audioRef.current.load();
       audioRef.current.loop = false;
+
       audioRef.current
         .play()
         .then(() => {
-          console.log("Secondary sound playing...");
+          console.log(`${src} is playing...`);
         })
-        .catch(() => {});
+        .catch((error) => {
+          console.error(`Error playing ${src}:`, error);
+        });
 
-      // 次の音声が終了したらリセット
-      const handleSecondarySoundEnded = () => {
-        audioRef.current?.removeEventListener(
-          "ended",
-          handleSecondarySoundEnded
-        );
-        console.log("Secondary sound finished.");
-      };
-      audioRef.current.addEventListener("ended", handleSecondarySoundEnded);
+      if (onEnd) {
+        audioRef.current.addEventListener("ended", function handleEnded() {
+          audioRef.current?.removeEventListener("ended", handleEnded);
+          onEnd();
+        });
+      }
     };
 
-    audioRef.current.addEventListener("ended", handlePrimarySoundEnded);
+    playAudio(primarySound, () => {
+      playAudio(secondarySound);
+    });
   }
 };
