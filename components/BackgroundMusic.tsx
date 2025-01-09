@@ -13,8 +13,16 @@ export default function BackgroundMusic({
 
   useEffect(() => {
     if (audioRef.current) {
+      audioRef.current.volume = 0.1; // 音量を設定
       if (shouldPlay) {
-        audioRef.current.play();
+        audioRef.current
+          .play()
+          .then(() => {
+            console.log(`${src} is playing...`);
+          })
+          .catch(() => {});
+      } else {
+        audioRef.current.pause();
       }
     }
   }, [shouldPlay]);

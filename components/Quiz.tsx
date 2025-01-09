@@ -2,6 +2,7 @@
 
 import { playSound } from "@/app/util";
 import { useState, useRef, useEffect } from "react";
+import styles from "./Quiz.module.css"; // スタイルを別ファイルで管理
 
 type Question = {
   question: string;
@@ -53,6 +54,7 @@ export default function Quiz() {
 
   useEffect(() => {
     setCurrentQuestion(generateQuestion(1, "add"));
+    //setCurrentQuestion(generateQuestion(2, "subtract"));
   }, []);
 
   const handleOptionClick = (option: number) => {
@@ -73,14 +75,20 @@ export default function Quiz() {
   }
 
   return (
-    <div>
-      <p>{currentQuestion.question}</p>
-      <div>
-        {currentQuestion.options.map((option, index) => (
-          <button key={index} onClick={() => handleOptionClick(option)}>
-            {option}
-          </button>
-        ))}
+    <div className={styles.container}>
+      <div className={styles.quizBox}>
+        <p className={styles.question}>{currentQuestion.question}</p>
+        <div className={styles.options}>
+          {currentQuestion.options.map((option, index) => (
+            <button
+              key={index}
+              className={styles.optionButton}
+              onClick={() => handleOptionClick(option)}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
       </div>
       <audio ref={audioRef} />
     </div>

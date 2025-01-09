@@ -3,6 +3,7 @@
 const isProduction = process.env.NODE_ENV === "production"; // 本番環境かどうかを判定
 
 const nextConfig = {
+  output: "export",
   // 本番環境のみ basePath と assetPrefix を適用
   basePath: isProduction ? "/taisei" : "",
   assetPrefix: isProduction ? "/taisei" : "",

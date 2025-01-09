@@ -20,9 +20,7 @@ export const playSound = (
         .then(() => {
           console.log(`${src} is playing...`);
         })
-        .catch((error) => {
-          console.error(`Error playing ${src}:`, error);
-        });
+        .catch(() => {});
 
       if (onEnd) {
         audioRef.current.addEventListener("ended", function handleEnded() {
