@@ -13,8 +13,8 @@ export default function Test() {
 
   // ボスをランダムに変更する関数
   const changeBoss = () => {
-    const newIndex = Math.floor(Math.random() * 4) + 1; // 1から4の間でランダム
-    setBossIndex(newIndex);
+    // const newIndex = Math.floor(Math.random() * 4) + 1; // 1から4の間でランダム
+    setBossIndex(1);
   };
 
   // 一定間隔でボスを変更する例

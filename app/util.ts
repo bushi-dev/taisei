@@ -1,5 +1,13 @@
 import { RefObject } from "react";
 
+export const getPath = (src: string) => {
+  if (typeof window !== "undefined" && window.location.href.match(/local/)) {
+    return src;
+  } else {
+    return "taisei" + src;
+  }
+};
+
 export const playSound = (
   audioRef: RefObject<HTMLAudioElement | null>,
   seikai: boolean

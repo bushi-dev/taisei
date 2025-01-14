@@ -4,7 +4,7 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 import Image from "next/image";
 import { useMusic } from "@/context/MusicContext";
 import styles from "./home.module.css";
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+import { getPath } from "./util";
 
 export default function Home() {
   const { isPlaying, setIsPlaying } = useMusic(); // setIsPlayingを取得
@@ -28,7 +28,7 @@ export default function Home() {
 
       <div className={styles.jumping}>
         <Image
-          src={BASE_PATH + "/image/inn.png"}
+          src={getPath("/image/nin.png")}
           alt="Ninja"
           width={250}
           height={250}

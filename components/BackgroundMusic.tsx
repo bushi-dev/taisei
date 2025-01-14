@@ -1,3 +1,4 @@
+import { getPath } from "@/app/util";
 import React, { useEffect, useRef } from "react";
 
 type BackgroundMusicProps = {
@@ -27,5 +28,5 @@ export default function BackgroundMusic({
     }
   }, [shouldPlay]);
 
-  return <audio ref={audioRef} src={src} loop />;
+  return <audio ref={audioRef} src={getPath(src)} loop />;
 }

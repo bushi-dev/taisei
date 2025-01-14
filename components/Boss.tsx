@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { getPath } from "@/app/util";
 
 type BossProps = {
   src: string; // 画像のソース
@@ -26,7 +27,7 @@ export default function Boss({ src }: BossProps) {
 
   return (
     <Image
-      src={src}
+      src={getPath(src)}
       alt="boss"
       width={size}
       height={size}
