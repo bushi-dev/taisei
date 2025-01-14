@@ -6,13 +6,15 @@ import { getPath } from "@/app/util";
 
 type BossProps = {
   src: string; // 画像のソース
+  initialPosition: { top: string; left: string };
 };
 
-export default function Boss({ src }: BossProps) {
-  const [position, setPosition] = useState({ top: "50%", left: "50%" });
+export default function Boss({ src, initialPosition }: BossProps) {
+  const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(250);
 
   useEffect(() => {
+    // 初回レンダリング後にアニメーションを開始
     const moveBoss = () => {
       const randomTop = `${Math.random() * 30 + 10}%`;
       const randomLeft = `${Math.random() * 30 + 10}%`;
@@ -21,6 +23,10 @@ export default function Boss({ src }: BossProps) {
       setSize(randomSize);
     };
 
+    // 初回のアニメーションをすぐに開始
+    moveBoss();
+
+    // その後は1秒間隔でアニメーション
     const interval = setInterval(moveBoss, 1000);
     return () => clearInterval(interval);
   }, []);

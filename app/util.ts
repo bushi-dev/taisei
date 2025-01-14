@@ -1,10 +1,13 @@
+"use client";
 import { RefObject } from "react";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const getPath = (src: string) => {
-  if (typeof window !== "undefined" && window.location.href.match(/local/)) {
+  if (!isProduction) {
     return src;
   } else {
-    return "taisei" + src;
+    return "/taisei" + src;
   }
 };
 

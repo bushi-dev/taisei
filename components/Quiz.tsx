@@ -4,6 +4,10 @@ import { playSound } from "@/app/util";
 import { useState, useRef, useEffect } from "react";
 import styles from "./Quiz.module.css"; // スタイルを別ファイルで管理
 
+type QuizProps = {
+  onCorrectAnswer?: () => void;
+};
+
 type Question = {
   question: string;
   options: number[];

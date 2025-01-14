@@ -1,26 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { getPath } from "@/app/util";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import Boss from "@/components/Boss";
 import Quiz from "@/components/Quiz";
 import { useMusic } from "@/context/MusicContext";
 
 export default function Test() {
-  const { isPlaying } = useMusic(); // setIsPlayingを取得
-  const [bossIndex, setBossIndex] = useState(1); // 初期値を1に設定
+  const { isPlaying } = useMusic();
+  const [visibleBosses, setVisibleBosses] = useState([true, true, true, true]);
+  const bossIndices = [1, 2, 3, 4]; // 複数のボスインデックス
 
-  // ボスをランダムに変更する関数
-  const changeBoss = () => {
-    // const newIndex = Math.floor(Math.random() * 4) + 1; // 1から4の間でランダム
-    setBossIndex(1);
+  const handleCorrectAnswer = () => {
+    setVisibleBosses((prev) => {
+      const index = prev.findIndex((v) => v);
+      if (index === -1) return prev;
+      const newVisible = [...prev];
+      newVisible[index] = false;
+      return newVisible;
+    });
   };
 
-  // 一定間隔でボスを変更する例
-  useEffect(() => {
-    changeBoss();
-  }, []);
+  // ボスの初期位置を計算
+  const getInitialPosition = (index: number) => {
+    const positions = [
+      { top: "20%", left: "20%" },
+      { top: "20%", left: "80%" },
+      { top: "80%", left: "20%" },
+      { top: "80%", left: "80%" },
+    ];
+    return positions[index % positions.length];
+  };
 
   return (
     <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
@@ -28,7 +40,13 @@ export default function Test() {
         src="/sound/maou_bgm_fantasy03.mp3"
         shouldPlay={isPlaying}
       />
-      <Boss src={`/image/boss/boss${bossIndex}.png`} /> {/* 動的に変更 */}
+      {bossIndices.map((index, i) => (
+        <Boss
+          key={index}
+          src={getPath(`/image/boss/boss${index}.png`)}
+          initialPosition={getInitialPosition(i)}
+        />
+      ))}
       <Link href="/">
         <button>HOMEへ</button>
       </Link>
