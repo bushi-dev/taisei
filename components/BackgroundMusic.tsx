@@ -26,7 +26,7 @@ export default function BackgroundMusic({
         audioRef.current.pause();
       }
     }
-  }, [shouldPlay]);
+  }, [shouldPlay, src]);
 
   return <audio ref={audioRef} src={getPath(src)} loop />;
 }

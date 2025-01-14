@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { getPath } from "@/app/util";
 import BackgroundMusic from "@/components/BackgroundMusic";
@@ -10,18 +9,7 @@ import { useMusic } from "@/context/MusicContext";
 
 export default function Test() {
   const { isPlaying } = useMusic();
-  const [visibleBosses, setVisibleBosses] = useState([true, true, true, true]);
   const bossIndices = [1, 2, 3, 4]; // 複数のボスインデックス
-
-  const handleCorrectAnswer = () => {
-    setVisibleBosses((prev) => {
-      const index = prev.findIndex((v) => v);
-      if (index === -1) return prev;
-      const newVisible = [...prev];
-      newVisible[index] = false;
-      return newVisible;
-    });
-  };
 
   // ボスの初期位置を計算
   const getInitialPosition = (index: number) => {
@@ -50,7 +38,11 @@ export default function Test() {
       <Link href="/">
         <button>HOMEへ</button>
       </Link>
-      <Quiz />
+      <Quiz
+        onCorrectAnswer={() => {
+          console.log("正解！");
+        }}
+      />
     </div>
   );
 }

@@ -52,7 +52,7 @@ const generateQuestion = (
   return { question, options, correctAnswer };
 };
 
-export default function Quiz() {
+export default function Quiz({ onCorrectAnswer }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -67,6 +67,9 @@ export default function Quiz() {
     const isCorrect = option === currentQuestion.correctAnswer;
     playSound(audioRef, isCorrect);
 
+    if (isCorrect) {
+      onCorrectAnswer?.();
+    }
     console.log(isCorrect ? "正解！" : "不正解！");
 
     setTimeout(() => {
